@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家电维修社</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans SC', sans-serif;
+            color: #333;
+        }
+
+        /* 添加页面渐入动画 */
+        body {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            height: 40vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('zhaopian/初音未来38.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        h1 {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 3rem;
+            text-align: center;
+            padding-top: 15vh;
+            margin: 0;
+            opacity: 0;
+            animation: slideDown 1s ease 0.5s forwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        #gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.05);
+        }
+
+        /* 表单样式 */
+        .form-section {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 50px;
+            transition: all 0.2s ease;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: #333;
+            width: 40px;
+            height: 40px;
+            justify-content: center;
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+            background: #f8f9fa;
+            color: #007bff;
+        }
+
+        .douyin-link:hover {
+            background: #000;
+            color: white;
+        }
+
+        .social-link i {
+            font-size: 1.2rem;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+                padding-top: 10vh;
+            }
+
+            #beijing-time {
+                font-size: 1rem;
+            }
+
+            .social-links {
+                flex-direction: row;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .social-link {
+                width: 35px;
+                height: 35px;
+            }
+
+            .social-link i {
+                font-size: 1.1rem;
+            }
+
+            .action-button {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+
+            #gallery {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 0 10px;
+            }
+
+            .image-container {
+                margin-bottom: 0;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            footer {
+                padding: 1rem 0;
+            }
+        }
+
+        /* 添加平板设备的适配 */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .social-links {
+                gap: 2rem;
+            }
+
+            .social-link {
+                width: 38px;
+                height: 38px;
+            }
+
+            #gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 优化图片容器效果 */
+        .image-container {
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* 优化表单交互 */
+        .form-group input,
+        .form-group textarea {
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+            outline: none;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+
+        .form-group input:focus::placeholder,
+        .form-group textarea:focus::placeholder {
+            color: #bbb;
+        }
+
+        /* 优化提交按钮 */
+        .submit-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 添加页面滚动平滑效果 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* 优化表单区域 */
+        .form-section {
+            transition: all 0.3s ease;
+        }
+
+        .form-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* 优化页脚 */
+        footer {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            transition: all 0.3s ease;
+        }
+
+        footer p {
+            margin: 0;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        footer p:hover {
+            color: #007bff;
+        }
+
+        /* 添加响应式优化 */
+        @media (max-width: 768px) {
+            #gallery {
+                gap: 0.8rem;
+            }
+
+            .image-container {
+                margin-bottom: 0.5rem;
+            }
+
+            .form-section {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .submit-btn {
+                padding: 0.8rem;
+            }
+        }
+
+        .action-section {
+            text-align: center;
+            margin: 3rem auto;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.5s forwards;
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,123,255,0.2);
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,123,255,0.3);
+        }
+
+        .action-button i {
+            font-size: 1.4rem;
+        }
+
+        /* 微信和QQ链接样式 */
+        .wechat-link:hover {
+            background: #07C160;
+            color: white;
+        }
+
+        .qq-link:hover {
+            background: #12B7F5;
+            color: white;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 10px 0;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close-modal:hover {
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .social-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .social-link {
+                margin: 5px;
+            }
+        }
+
+        /* 图片查看器样式 */
+        .image-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-viewer.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+
+        .image-viewer img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .image-viewer.active img {
+            transform: scale(1);
+        }
+
+        .close-viewer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .close-viewer:hover {
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+
+        /* 优化图片网格动画 */
+        #gallery .image-container {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        #gallery .image-container.show {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 添加时间显示的淡入动画 */
+        #beijing-time {
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>欢迎来到家电维修社！</h1>
+        <div id="beijing-time" style="color: white; text-align: center; font-size: 1.2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"></div>
+    </header>
+
+    <main>
+        <section id="gallery">
+            <div class="image-container">
+                <img src="zhaopian/纳西妲02.jpg" alt="纳西妲02">
+            </div>
+            <div class="image-container">
+                <img src="zhaopian/草神纳西妲原神66.jpg" alt="草神纳西妲原神66">
+            </div>
+            <div class="image-container">
+                <img src="zhaopian/草神纳西妲原神59.jpg" alt="草神纳西妲原神59">
+            </div>
+            <div class="image-container">
+                <img src="zhaopian/1726025850583.jpg" alt="1726025850583">
+            </div>
+        </section>
+
+        <section class="action-section">
+            <a href="wei.xiu.yu.yue.html" class="action-button">
+                <i class="fas fa-tools"></i>
+                <span>维修预约</span>
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="mailto:htsllpyyds715@163.com" class="social-link email-link">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="javascript:void(0)" class="social-link wechat-link" id="wechatBtn">
+                <i class="fab fa-weixin"></i>
+            </a>
+            <a href="tencent://message/?uin=你的QQ号码" class="social-link qq-link">
+                <i class="fab fa-qq"></i>
+            </a>
+            <a href="https://www.douyin.com/user/MS4wLjABAAAA8MjxQLWqBMlUsiEVtWMb4P5i5O2ComsIUrgcAQz8zk8?from_tab_name=main" 
+               class="social-link douyin-link" target="_blank">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+        <!-- 添加微信二维码弹窗 -->
+        <div id="wechatModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <img src="你的微信二维码图片路径.jpg" alt="微信二维码" class="qr-code">
+                <p>扫描二维码添加微信</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="image-viewer" id="imageViewer">
+        <span class="close-viewer">&times;</span>
+        <img src="" alt="Full size image">
+    </div>
+
+    <script>
+        // 更新北京时间的函数
+        function updateBeijingTime() {
+            const now = new Date();
+            const options = { 
+                timeZone: 'Asia/Shanghai',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const timeString = now.toLocaleString('zh-CN', options).replace(/\//g, '-');
+            document.getElementById('beijing-time').textContent = timeString;
+        }
+
+        // 图片查看器功能
+        const imageViewer = document.getElementById('imageViewer');
+        const viewerImage = imageViewer.querySelector('img');
+        const closeViewer = document.querySelector('.close-viewer');
+
+        document.querySelectorAll('#gallery img').forEach(img => {
+            img.addEventListener('click', () => {
+                viewerImage.src = img.src;
+                imageViewer.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeImageViewer() {
+            imageViewer.classList.remove('active');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                imageViewer.style.display = 'none';
+            }, 300);
+        }
+
+        closeViewer.addEventListener('click', closeImageViewer);
+        imageViewer.addEventListener('click', (e) => {
+            if (e.target === imageViewer) {
+                closeImageViewer();
+            }
+        });
+
+        // 图片滚动动画
+        function handleScrollAnimation() {
+            const images = document.querySelectorAll('#gallery .image-container');
+            images.forEach(img => {
+                const rect = img.getBoundingClientRect();
+                const isVisible = rect.top <= window.innerHeight * 0.8;
+                if (isVisible && !img.classList.contains('show')) {
+                    img.classList.add('show');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScrollAnimation);
+        window.addEventListener('load', handleScrollAnimation);
+
+        // 优化时间显示
+        updateBeijingTime();
+        setInterval(updateBeijingTime, 1000);
+
+        // 优化图片加载
+        document.querySelectorAll('img').forEach(img => {
+            img.loading = 'lazy';
+            img.decoding = 'async';
+        });
+
+        // 微信二维码弹窗功能
+        const wechatBtn = document.getElementById('wechatBtn');
+        const wechatModal = document.getElementById('wechatModal');
+        const closeModal = document.querySelector('.close-modal');
+
+        wechatBtn.addEventListener('click', () => {
+            wechatModal.style.display = 'flex';
+        });
+
+        closeModal.addEventListener('click', () => {
+            wechatModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === wechatModal) {
+                wechatModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
